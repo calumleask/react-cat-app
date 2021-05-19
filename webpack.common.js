@@ -1,4 +1,5 @@
 const path = require("path");
+const Dotenv = require("dotenv-webpack");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -35,7 +36,8 @@ module.exports = ({
       patterns: [
         { from: "public", to: BUILD_DIR }
       ]
-    })
+    }),
+    new Dotenv()
   ],
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
