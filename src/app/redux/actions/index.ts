@@ -1,1 +1,1 @@
-export * from "./CountActions";
+export * from "./ImageActions";

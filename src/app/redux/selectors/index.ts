@@ -1,1 +1,1 @@
-export * from "./CountSelectors";
+export * from "./ImageSelectors";

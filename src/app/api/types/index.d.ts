@@ -1,6 +1,16 @@
 
 declare namespace TheCatApi {
 
+  type Image = {
+    id: string;
+    url: string;
+    sub_id: string;
+    created_At: string;
+    original_filename: string;
+    categories: any; // TODO
+    breeds: any; // TODO
+  };
+
   /**
    * POST /images/upload 
    * */
@@ -23,19 +33,11 @@ declare namespace TheCatApi {
     category_ids: string[]; // TODO unique
     original_filename: string;
     format: "json" | "src";
-    include_vote: boolean;
-    include_favourite: boolean;
+    include_vote: number;
+    include_favourite: number;
   };
 
-  type GetImagesResponseData = {
-    id: string;
-    url: string;
-    sub_id: string;
-    created_At: string;
-    original_filename: string;
-    categories: any; // TODO
-    breeds: any; // TODO
-  }[];
+  type GetImagesResponseData = Image[];
 
   /**
    * POST /favourites 

@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
+
+import { fetchImagesAction } from "~/app/redux/actions";
 
 import HomeRoute from "~/app/routes/Home";
 import UploadRoute from "~/app/routes/Upload";
@@ -7,6 +10,12 @@ import UploadRoute from "~/app/routes/Upload";
 import "./style.scss";
 
 const App: React.FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchImagesAction());
+  }, []);
+
   return (
     <div className={"app-container"}>
       <Router>
