@@ -1,0 +1,26 @@
+$min-width: 300px;
+$grid-spacing: 5px;
+
+.image-grid-container {
+  align-items: center;
+  display: grid;
+  grid-column-gap: $grid-spacing;
+  grid-row-gap: $grid-spacing;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+
+  .image-grid-item-container {
+    min-width: $min-width;
+    max-width: 100%;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+$breakpoint-tablet: $min-width * 4;
+@media (min-width: $breakpoint-tablet) {
+  .image-grid-container {
+    grid-template-columns: repeat(4, minmax($min-width, 1fr));
+  }
+}

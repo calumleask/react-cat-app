@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 
 import { selectImages } from "~/app/redux/selectors";
 
+import { ImageGrid } from "./components/ImageGrid";
+
 const HomeRoute: React.FC = () => {
   const history = useHistory();
 
@@ -12,10 +14,8 @@ const HomeRoute: React.FC = () => {
   return (
     <>
       <h1>Images</h1>
-      <button onClick={(): void => { history.push("/upload"); }}>{"Upload"}</button>
-      {images.map((image, index) => (
-        <img key={index} src={image.url}/>
-      ))}
+      <button style={{ width: "100px" }} onClick={(): void => { history.push("/upload"); }}>{"Upload"}</button>
+      <ImageGrid images={images}/>
     </>
   );
 };

@@ -19,10 +19,12 @@ const App: React.FC = () => {
   return (
     <div className={"app-container"}>
       <Router>
-        <Switch>
-          <Route exact={true} path="/" component={HomeRoute}/>
-          <Route exact={true} path="/upload" component={UploadRoute}/>
-        </Switch>
+        <div className={"content-container"}>
+          <Switch>
+            <Route exact={true} path="/" component={HomeRoute}/>
+            <Route exact={true} path="/upload" component={UploadRoute}/>
+          </Switch>
+        </div>
       </Router>
     </div>
   );
