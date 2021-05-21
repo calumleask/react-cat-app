@@ -13,10 +13,7 @@ $grid-spacing: 5px;
   .image-grid-item-container {
     min-width: $min-width;
     max-width: 100%;
-
-    img {
-      width: 100%;
-    }
+    height: 100%;
   }
 }
 

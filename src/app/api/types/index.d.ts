@@ -1,16 +1,6 @@
 
 declare namespace TheCatApi {
 
-  type Image = {
-    id: string;
-    url: string;
-    sub_id: string;
-    created_At: string;
-    original_filename: string;
-    categories: any; // TODO
-    breeds: any; // TODO
-  };
-
   /**
    * POST /images/upload 
    * */
@@ -37,7 +27,37 @@ declare namespace TheCatApi {
     include_favourite: number;
   };
 
-  type GetImagesResponseData = Image[];
+  type GetImagesResponseData = {
+    id: string;
+    url: string;
+    sub_id: string;
+    created_at: string;
+    original_filename: string;
+    categories: any; // TODO
+    breeds: any; // TODO
+  }[];
+
+  /**
+   * GET /favourites 
+   * */
+
+  type GetFavouritesRequestParams = {
+    limit: number;
+    page: number;
+    sub_id: string;
+  };
+
+  type GetFavouritesResponseData = {
+    id: string;
+    user_id: string;
+    image_id: string;
+    sub_id: string;
+    created_at: string;
+    image: {
+      id: string;
+      url: string;
+    }
+  }[];
 
   /**
    * POST /favourites 
@@ -51,7 +71,7 @@ declare namespace TheCatApi {
   type PostFavouritesResponseData = {
     message: string;
     id: string | number;
-  }[];
+  };
 
   /**
    * DELETE /favourites/{favourite_id} 
@@ -90,9 +110,19 @@ declare namespace TheCatApi {
     value: number;
     image_id: string;
     sub_id: string;
-    created_At: string;
+    created_at: string;
     id: string;
     country_code: string;
   }[];
+
+}
+
+declare namespace App {
+
+  type ImageCardData = {
+    imageId: string;
+    url: string;
+    favourited: boolean;
+  };
 
 }

@@ -8,8 +8,8 @@ const headers = {
   "x-api-key": process.env.THE_CAT_API_KEY
 };
 
-export const uploadImage = async (file: any, sub_id?: string): Promise<void> => {
-  const body: TheCatApi.PostImagesUploadRequestBody = { file, sub_id };
+export const uploadImage = async (file: any, subId?: string): Promise<void> => {
+  const body: TheCatApi.PostImagesUploadRequestBody = { file, sub_id: subId };
   return new Promise((resolve, reject) => {
     axios.post("/images/upload", body, {
       headers: {
@@ -58,8 +58,31 @@ export const getImages = async (options: TheCatApi.GetImagesRequestParams): Prom
   });
 };
 
-export const favouriteImage = async (image_id: string, sub_id?: string): Promise<TheCatApi.PostFavouritesResponseData> => {
-  const body: TheCatApi.PostFavouritesRequestBody = { image_id, sub_id };
+const formatGetFavouritesRequestParams = (options: TheCatApi.GetFavouritesRequestParams): TheCatApi.GetFavouritesRequestParams => ({
+  limit: options.limit,
+  page: options.page,
+  sub_id: options.sub_id,
+});
+
+export const getFavourites = async (options: TheCatApi.GetFavouritesRequestParams): Promise<TheCatApi.GetFavouritesResponseData> => {
+  return new Promise((resolve, reject) => {
+    axios.get<TheCatApi.GetFavouritesResponseData>("/favourites", {
+      headers,
+      params: formatGetFavouritesRequestParams(options)
+    })
+    .then((response) => {
+      console.log("GET /favourites");
+      console.log(response);
+      resolve(response.data);
+    })
+    .catch(err => {
+      reject(err);
+    });
+  });
+};
+
+export const favouriteImage = async (imageId: string, subId?: string): Promise<TheCatApi.PostFavouritesResponseData> => {
+  const body: TheCatApi.PostFavouritesRequestBody = { image_id: imageId, sub_id: subId };
   return new Promise((resolve, reject) => {
     axios.post<TheCatApi.PostFavouritesResponseData>("/favourites", body, {
       headers: {
@@ -78,9 +101,9 @@ export const favouriteImage = async (image_id: string, sub_id?: string): Promise
   });
 };
 
-export const unfavouriteImage = async (favourite_id: string): Promise<TheCatApi.DeleteFavouritesResponseData> => {
+export const unfavouriteImage = async (favouriteId: string): Promise<TheCatApi.DeleteFavouritesResponseData> => {
   return new Promise((resolve, reject) => {
-    axios.delete<TheCatApi.DeleteFavouritesResponseData>(`/favourites/${favourite_id}`, {
+    axios.delete<TheCatApi.DeleteFavouritesResponseData>(`/favourites/${favouriteId}`, {
       headers
     })
     .then((response) => {
@@ -94,8 +117,8 @@ export const unfavouriteImage = async (favourite_id: string): Promise<TheCatApi.
   });
 };
 
-const vote = async (image_id: string, value: number, sub_id?: string, ): Promise<TheCatApi.PostVotesResponseData> => {
-  const body: TheCatApi.PostVotesRequestBody = { image_id, sub_id, value };
+const vote = async (imageId: string, value: number, subId?: string, ): Promise<TheCatApi.PostVotesResponseData> => {
+  const body: TheCatApi.PostVotesRequestBody = { image_id: imageId, sub_id: subId, value };
   return new Promise((resolve, reject) => {
     axios.post<TheCatApi.PostVotesResponseData>("/votes", body, {
       headers: {
@@ -114,8 +137,8 @@ const vote = async (image_id: string, value: number, sub_id?: string, ): Promise
   });
 };
 
-export const voteUp = (image_id: string, sub_id?: string): Promise<TheCatApi.PostVotesResponseData> => vote(image_id, 1, sub_id);
-export const voteDown = (image_id: string, sub_id?: string): Promise<TheCatApi.PostVotesResponseData> => vote(image_id, 0, sub_id);
+export const voteUp = (imageId: string, subId?: string): Promise<TheCatApi.PostVotesResponseData> => vote(imageId, 1, subId);
+export const voteDown = (imageId: string, subId?: string): Promise<TheCatApi.PostVotesResponseData> => vote(imageId, 0, subId);
 
 const formatGetVotesRequestParams = (options: TheCatApi.GetVotesRequestParams): TheCatApi.GetVotesRequestParams => ({
   sub_id: options.sub_id,

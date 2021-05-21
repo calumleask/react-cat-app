@@ -1,10 +1,13 @@
 import { ReduxThunkAction } from "../types";
 
-import { buildActionUpdateAllImages } from "../reducers/AppReducer";
+import { buildActionUpdateAllImages } from "../reducers/ImagesReducer";
+//import { selectUserSubId } from "../selectors";
 
 import { getImages } from "~/app/api";
 
-export const fetchImagesAction = (): ReduxThunkAction => (dispatch): void => {
+export const fetchImagesAction = (): ReduxThunkAction => (dispatch, _getState): void => {
+  // TODO: use once images are uploaded with subId
+  //const subId = selectUserSubId(getState());
   getImages({
     limit: 10,
     page: 1,

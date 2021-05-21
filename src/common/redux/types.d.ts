@@ -1,5 +1,5 @@
 
-declare type ReducerState = Record<string, unknown>;
+declare type ReducerState = any;
 
 declare type AppState = Record<string, ReducerState>;
 
