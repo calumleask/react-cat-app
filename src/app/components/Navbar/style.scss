@@ -1,0 +1,14 @@
+@import "~/app/style/color.scss";
+
+.navbar {
+  background-color: $navbar-color;
+  border-bottom: 1px solid $navbar-border-color;
+
+  .nav-container {
+    padding-left: 5px;
+  
+    .nav-link.active {
+      color: $navbar-active-text-color !important;
+    }
+  }
+}
