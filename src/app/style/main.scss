@@ -1,4 +1,5 @@
 @import "./color.scss";
+@import "./breakpoints.scss";
 
 body {
   background-color: $body-color;
@@ -26,4 +27,20 @@ html::-webkit-scrollbar-thumb {
 html {
   scrollbar-width: thin;
   scrollbar-color: $scroll-thumb-color $scroll-track-color;
+}
+
+.nav-container, .content-container {
+  width: 100%;
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .nav-container, .content-container {
+    width: 80%;
+  }
+}
+
+@media (min-width: $breakpoint-desktop-large) {
+  .nav-container, .content-container {
+    width: 60%;
+  }
 }

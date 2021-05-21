@@ -1,3 +1,4 @@
+@import "~/app/style/breakpoints.scss";
 
 .app-container {
   position: absolute;
@@ -10,8 +11,15 @@
 }
 
 .content-container {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 20px 5px;
-  align-items: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .content-container {
+    padding: 60px 0;
+  }
 }

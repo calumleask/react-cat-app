@@ -1,4 +1,6 @@
-$min-width: 300px;
+@import "~/app/style/breakpoints.scss";
+
+$min-width: 280px;
 $grid-spacing: 5px;
 
 .image-grid-container {
@@ -18,9 +20,12 @@ $grid-spacing: 5px;
   }
 }
 
-$breakpoint-tablet: $min-width * 4;
-@media (min-width: $breakpoint-tablet) {
+@media (min-width: $breakpoint-desktop-large) {
   .image-grid-container {
-    grid-template-columns: repeat(4, minmax($min-width, 1fr));
+    grid-template-columns: repeat(4, 1fr);
+
+    .image-grid-item-container {
+      min-width: unset;
+    }
   }
 }
