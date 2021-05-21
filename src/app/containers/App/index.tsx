@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 
 import { fetchImagesAction } from "~/app/redux/actions";
 
@@ -25,6 +25,7 @@ const App: React.FC = () => {
           <Switch>
             <Route exact={true} path="/" component={HomeRoute}/>
             <Route exact={true} path="/upload" component={UploadRoute}/>
+            <Route component={(): React.ReactElement => <Redirect to="/"/>}/>
           </Switch>
         </div>
       </Router>
