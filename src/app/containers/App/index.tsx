@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 
-import { fetchImagesAction, fetchFavouritesAction } from "~/app/redux/actions";
+import { fetchImagesAction, fetchFavouritesAction, fetchVotesAction } from "~/app/redux/actions";
 
 import Navbar from "~/app/components/Navbar";
 import HomeRoute from "~/app/routes/Home";
@@ -16,6 +16,7 @@ const App: React.FC = () => {
   useEffect(() => {
     dispatch(fetchImagesAction());
     dispatch(fetchFavouritesAction());
+    dispatch(fetchVotesAction());
   }, []);
 
   return (

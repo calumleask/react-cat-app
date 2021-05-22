@@ -9,7 +9,7 @@ type FavouriteData = {
   apiRequestInFlight: boolean;
   confirmedStatus: "FAVOURITED" | "UNFAVOURITED";
   desiredStatus: "FAVOURITED" | "UNFAVOURITED";
-  favouriteId: string | null;
+  favouriteId: string;
 };
 
 type FavouritesReducerState = Record<string, FavouriteData>;
@@ -23,10 +23,8 @@ const initialState: FavouritesReducerState = {};
 const reducerName = "favourites";
 const actionTypes = createActionTypes(reducerName, [
   "UPDATE_ALL_FAVOURITES",
-  "FAVOURITE_IMAGE_OPTIMISITIC",
-  "FAVOURITE_IMAGE_ASYNC_COMPLETE",
-  "UNFAVOURITE_IMAGE_OPTIMISITIC",
-  "UNFAVOURITE_IMAGE_ASYNC_COMPLETE",
+  "FAVOURITE_OPTIMISITIC",
+  "FAVOURITE_ASYNC_COMPLETE",
   "ASYNC_BEGIN",
   "ASYNC_ERROR"
 ]);
@@ -37,43 +35,23 @@ const actionTypes = createActionTypes(reducerName, [
 
 const reducer = createReducer<FavouritesReducerState>(initialState, {
   [actionTypes.UPDATE_ALL_FAVOURITES]: (_state, { payload }: UpdateAllFavouritesAction) => ({ ...payload.favourites }),
-  [actionTypes.FAVOURITE_IMAGE_OPTIMISITIC]: (state, { payload }: FavouriteAction) => {
+  [actionTypes.FAVOURITE_OPTIMISITIC]: (state, { payload }: FavouriteAction) => {
     return {
       ...state,
       [payload.imageId]: {
         ...state[payload.imageId],
-        desiredStatus: "FAVOURITED"
+        desiredStatus: payload.favourited ? "FAVOURITED" : "UNFAVOURITED"
       }
     };
   },
-  [actionTypes.FAVOURITE_IMAGE_ASYNC_COMPLETE]: (state, { payload }: FavouriteConfirmedAction) => {
+  [actionTypes.FAVOURITE_ASYNC_COMPLETE]: (state, { payload }: FavouriteConfirmedAction) => {
     return {
       ...state,
       [payload.imageId]: {
         ...state[payload.imageId],
         apiRequestInFlight: false,
-        confirmedStatus: "FAVOURITED",
+        confirmedStatus: payload.favourited ? "FAVOURITED" : "UNFAVOURITED",
         favouriteId: payload.favouriteId
-      }
-    };
-  },
-  [actionTypes.UNFAVOURITE_IMAGE_OPTIMISITIC]: (state, { payload }: FavouriteAction) => {
-    return {
-      ...state,
-      [payload.imageId]: {
-        ...state[payload.imageId],
-        desiredStatus: "UNFAVOURITED"
-      }
-    };
-  },
-  [actionTypes.UNFAVOURITE_IMAGE_ASYNC_COMPLETE]: (state, { payload }: FavouriteAction) => {
-    return {
-      ...state,
-      [payload.imageId]: {
-        ...state[payload.imageId],
-        apiRequestInFlight: false,
-        confirmedStatus: "UNFAVOURITED",
-        favouriteId: null
       }
     };
   },
@@ -129,39 +107,35 @@ export const buildActionUpdateAllFavourites = (favourites: TheCatApi.GetFavourit
 
 export type FavouriteAction = ReduxAction<{
   imageId: string;
+  favourited: boolean;
 }>;
 
-export const buildActionFavouriteImageOptimistic = (imageId: string): FavouriteAction => ({
-  type: actionTypes.FAVOURITE_IMAGE_OPTIMISITIC,
-  payload: { imageId }
+export const buildActionFavouriteOptimistic = (imageId: string, favourited: boolean): FavouriteAction => ({
+  type: actionTypes.FAVOURITE_OPTIMISITIC,
+  payload: { imageId, favourited }
 });
 
 type FavouriteConfirmedAction = ReduxAction<{
   imageId: string;
   favouriteId: string;
+  favourited: boolean;
 }>;
 
-export const buildActionFavouriteImageAsyncComplete = (imageId: string, favouriteId: string): FavouriteConfirmedAction => ({
-  type: actionTypes.FAVOURITE_IMAGE_ASYNC_COMPLETE,
-  payload: { imageId, favouriteId }
+export const buildActionFavouriteAsyncComplete = (imageId: string, favourited: boolean, favouriteId = ""): FavouriteConfirmedAction => ({
+  type: actionTypes.FAVOURITE_ASYNC_COMPLETE,
+  payload: { imageId, favourited, favouriteId: favourited ? favouriteId : "" }
 });
 
-export const buildActionUnfavouriteImageOptimistic = (imageId: string): FavouriteAction => ({
-  type: actionTypes.UNFAVOURITE_IMAGE_OPTIMISITIC,
-  payload: { imageId }
-});
+type FavouriteAsyncStatusAction = ReduxAction<{
+  imageId: string;
+}>;
 
-export const buildActionUnfavouriteImageAsyncComplete = (imageId: string): FavouriteAction => ({
-  type: actionTypes.UNFAVOURITE_IMAGE_ASYNC_COMPLETE,
-  payload: { imageId }
-});
-
-export const buildActionAsyncBegin = (imageId: string): FavouriteAction => ({
+export const buildActionAsyncBegin = (imageId: string): FavouriteAsyncStatusAction => ({
   type: actionTypes.ASYNC_BEGIN,
   payload: { imageId }
 });
 
-export const buildActionAsyncError = (imageId: string): FavouriteAction => ({
+export const buildActionAsyncError = (imageId: string): FavouriteAsyncStatusAction => ({
   type: actionTypes.ASYNC_ERROR,
   payload: { imageId }
 });

@@ -117,7 +117,7 @@ export const unfavouriteImage = async (favouriteId: string): Promise<TheCatApi.D
   });
 };
 
-const vote = async (imageId: string, value: number, subId?: string, ): Promise<TheCatApi.PostVotesResponseData> => {
+export const vote = async (imageId: string, value: TheCatApi.VoteValue, subId?: string, ): Promise<TheCatApi.PostVotesResponseData> => {
   const body: TheCatApi.PostVotesRequestBody = { image_id: imageId, sub_id: subId, value };
   return new Promise((resolve, reject) => {
     axios.post<TheCatApi.PostVotesResponseData>("/votes", body, {
@@ -136,9 +136,6 @@ const vote = async (imageId: string, value: number, subId?: string, ): Promise<T
     });
   });
 };
-
-export const voteUp = (imageId: string, subId?: string): Promise<TheCatApi.PostVotesResponseData> => vote(imageId, 1, subId);
-export const voteDown = (imageId: string, subId?: string): Promise<TheCatApi.PostVotesResponseData> => vote(imageId, 0, subId);
 
 const formatGetVotesRequestParams = (options: TheCatApi.GetVotesRequestParams): TheCatApi.GetVotesRequestParams => ({
   sub_id: options.sub_id,

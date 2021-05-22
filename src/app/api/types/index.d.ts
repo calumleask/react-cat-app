@@ -94,7 +94,7 @@ declare namespace TheCatApi {
   type PostVotesResponseData = {
     message: string;
     id: string | number;
-  }[];
+  };
 
   /**
    * GET /votes/
@@ -106,8 +106,10 @@ declare namespace TheCatApi {
     page: number;
   };
 
+  type VoteValue = 0 | 1;
+
   type GetVotesResponseData = {
-    value: number;
+    value: VoteValue;
     image_id: string;
     sub_id: string;
     created_at: string;
@@ -123,6 +125,7 @@ declare namespace App {
     imageId: string;
     url: string;
     favourited: boolean;
+    score: number;
   };
 
 }

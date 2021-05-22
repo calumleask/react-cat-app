@@ -2,10 +2,8 @@ import { ReduxThunkAction } from "../types";
 
 import {
   buildActionUpdateAllFavourites,
-  buildActionFavouriteImageOptimistic,
-  buildActionFavouriteImageAsyncComplete,
-  buildActionUnfavouriteImageOptimistic,
-  buildActionUnfavouriteImageAsyncComplete,
+  buildActionFavouriteOptimistic,
+  buildActionFavouriteAsyncComplete,
   buildActionAsyncBegin,
   buildActionAsyncError
 } from "../reducers/FavouritesReducer";
@@ -25,9 +23,9 @@ export const fetchFavouritesAction = (): ReduxThunkAction => (dispatch, getState
   });
 };
 
-export const favouriteImageAction = (imageId: string): ReduxAction => {
-  return buildActionFavouriteImageOptimistic(imageId);
-};
+export const favouriteImageAction = (imageId: string): ReduxAction =>  buildActionFavouriteOptimistic(imageId, true);
+
+export const unfavouriteImageAction = (imageId: string): ReduxAction => buildActionFavouriteOptimistic(imageId, false);
 
 export const favouriteImageAsyncApiAction = (imageId: string): ReduxThunkAction => (dispatch, getState): void => {
   dispatch(buildActionAsyncBegin(imageId));
@@ -36,15 +34,11 @@ export const favouriteImageAsyncApiAction = (imageId: string): ReduxThunkAction 
   .then((response) => {
     console.log(response.message);
     const favouriteId = typeof response.id === "number" ? response.id.toString() : response.id;
-    dispatch(buildActionFavouriteImageAsyncComplete(imageId, favouriteId));
+    dispatch(buildActionFavouriteAsyncComplete(imageId, true, favouriteId));
   })
   .catch(() => {
     dispatch(buildActionAsyncError(imageId));
   });
-};
-
-export const unfavouriteImageAction = (imageId: string): ReduxAction => {
-  return buildActionUnfavouriteImageOptimistic(imageId);
 };
 
 export const unfavouriteImageAsyncApiAction = (imageId: string, favouriteId: string): ReduxThunkAction => (dispatch): void => {
@@ -52,7 +46,7 @@ export const unfavouriteImageAsyncApiAction = (imageId: string, favouriteId: str
   theCatApi.unfavouriteImage(favouriteId)
   .then((response) => {
     console.log(response.message);
-    dispatch(buildActionUnfavouriteImageAsyncComplete(imageId));
+    dispatch(buildActionFavouriteAsyncComplete(imageId, false));
   })
   .catch(() => {
     dispatch(buildActionAsyncError(imageId));

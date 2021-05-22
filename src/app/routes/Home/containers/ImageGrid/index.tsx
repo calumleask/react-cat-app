@@ -2,7 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectImageCards } from "~/app/redux/selectors";
-import { favouriteImageAction, unfavouriteImageAction } from "~/app/redux/actions";
+import {
+  favouriteImageAction,
+  unfavouriteImageAction,
+  voteUpImageAction,
+  voteDownImageAction
+} from "~/app/redux/actions";
 
 import { ImageCard } from "../../components/ImageCard";
 
@@ -14,11 +19,19 @@ const ImageGrid: React.FC = () => {
 
   const onFavouriteClick = (image: App.ImageCardData): void => {
     if (image.favourited) {
-      dispatch(unfavouriteImageAction(image.imageId, image.favouriteId));
+      dispatch(unfavouriteImageAction(image.imageId));
     }
     else {
       dispatch(favouriteImageAction(image.imageId));
     }
+  };
+
+  const onVoteUpClick = (image: App.ImageCardData): void => {
+    dispatch(voteUpImageAction(image.imageId));
+  };
+
+  const onVoteDownClick = (image: App.ImageCardData): void => {
+    dispatch(voteDownImageAction(image.imageId));
   };
 
   return (
@@ -28,6 +41,8 @@ const ImageGrid: React.FC = () => {
           <ImageCard
             data={image}
             onFavouriteClick={(): void => { onFavouriteClick(image); }}
+            onVoteUpClick={(): void => { onVoteUpClick(image); }}
+            onVoteDownClick={(): void => { onVoteDownClick(image); }}
           />
         </div>
       ))}
