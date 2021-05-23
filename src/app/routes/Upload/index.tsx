@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { selectIsUploading } from "~/app/redux/selectors";
+import { uploadImageAction } from "~/app/redux/actions";
 
 import { DropzoneImageCard } from "./components/DropzoneImageCard";
 import { Button } from "react-bootstrap";
@@ -6,15 +10,21 @@ import { Button } from "react-bootstrap";
 import "./style.scss";
 
 const UploadRoute: React.FC = () => {
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const isUploading = useSelector(selectIsUploading);
 
   const onUploadClick = (): void => {
-    // TODO
+    if (selectedImage && !isUploading) {
+      dispatch(uploadImageAction(selectedImage));
+    }
   };
 
   const onRemoveClick = (): void => {
     setSelectedImage(null);
   };
+
+  const buttonsDisabled = isUploading || selectedImage === null;
 
   return (
     <>
@@ -25,8 +35,8 @@ const UploadRoute: React.FC = () => {
       <div className="button-container">
         <Button
           className="upload"
-          disabled={selectedImage === null}
-          variant="outline-danger"
+          disabled={buttonsDisabled}
+          variant="outline-primary"
           size="sm"
           onClick={onUploadClick}
         >
@@ -34,7 +44,7 @@ const UploadRoute: React.FC = () => {
         </Button>
         <Button
           className="remove"
-          disabled={selectedImage === null}
+          disabled={buttonsDisabled}
           variant="outline-danger"
           size="sm"
           onClick={onRemoveClick}

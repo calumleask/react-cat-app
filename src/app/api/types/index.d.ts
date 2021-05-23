@@ -5,9 +5,14 @@ declare namespace TheCatApi {
    * POST /images/upload 
    * */
 
-  type PostImagesUploadRequestBody = {
-    file: any;
+  type PostImagesUploadResponseBody = {
+    id: string;
+    url: string;
     sub_id: string;
+    created_at: string;
+    original_filename: string;
+    categories: any; // TODO
+    breeds: any; // TODO
   };
 
   /**

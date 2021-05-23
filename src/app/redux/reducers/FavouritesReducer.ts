@@ -44,7 +44,7 @@ const reducer = createReducer<FavouritesReducerState>(initialState, {
       }
     };
   },
-  [actionTypes.FAVOURITE_ASYNC_COMPLETE]: (state, { payload }: FavouriteConfirmedAction) => {
+  [actionTypes.FAVOURITE_ASYNC_COMPLETE]: (state, { payload }: FavouriteCompleteAction) => {
     return {
       ...state,
       [payload.imageId]: {
@@ -115,13 +115,13 @@ export const buildActionFavouriteOptimistic = (imageId: string, favourited: bool
   payload: { imageId, favourited }
 });
 
-type FavouriteConfirmedAction = ReduxAction<{
+type FavouriteCompleteAction = ReduxAction<{
   imageId: string;
   favouriteId: string;
   favourited: boolean;
 }>;
 
-export const buildActionFavouriteAsyncComplete = (imageId: string, favourited: boolean, favouriteId = ""): FavouriteConfirmedAction => ({
+export const buildActionFavouriteAsyncComplete = (imageId: string, favourited: boolean, favouriteId = ""): FavouriteCompleteAction => ({
   type: actionTypes.FAVOURITE_ASYNC_COMPLETE,
   payload: { imageId, favourited, favouriteId: favourited ? favouriteId : "" }
 });

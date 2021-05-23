@@ -8,10 +8,11 @@ const headers = {
   "x-api-key": process.env.THE_CAT_API_KEY
 };
 
-export const uploadImage = async (file: any, subId?: string): Promise<void> => {
-  const body: TheCatApi.PostImagesUploadRequestBody = { file, sub_id: subId };
+export const uploadImage = async (file: File): Promise<TheCatApi.PostImagesUploadResponseBody> => {
+  const formData = new FormData();
+  formData.append("file", file);
   return new Promise((resolve, reject) => {
-    axios.post("/images/upload", body, {
+    axios.post<TheCatApi.PostImagesUploadResponseBody>("/images/upload", formData, {
       headers: {
         ...headers,
         "Content-Type": "multipart/form-data"
@@ -20,7 +21,7 @@ export const uploadImage = async (file: any, subId?: string): Promise<void> => {
     .then((response) => {
       console.log("POST /images/upload");
       console.log(response);
-      resolve();
+      resolve(response.data);
     })
     .catch(err => {
       reject(err);
