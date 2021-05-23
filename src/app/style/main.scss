@@ -10,6 +10,10 @@ body {
   font-family: helvetica, verdana, arial;
 }
 
+p {
+  color: $black;
+}
+
 $scrollbar-width: 6px;
 
 html::-webkit-scrollbar {

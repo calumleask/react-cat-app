@@ -9,6 +9,7 @@ $grid-spacing: 5px;
   grid-column-gap: $grid-spacing;
   grid-row-gap: $grid-spacing;
   grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  width: 100%;
 
   .image-grid-item-container {
     min-width: $min-width;

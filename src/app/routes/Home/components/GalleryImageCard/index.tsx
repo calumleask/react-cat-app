@@ -18,6 +18,9 @@ export const GalleryImageCard: React.FC<ImageCardProps> = ({ data, onFavouriteCl
     <ImageCard
       className="gallery-image-card"
       src={data.url}
+      renderPlaceholder={(): React.ReactElement => (
+        <div className="placeholder"></div>
+      )}
       renderBottom={(): React.ReactElement => (
         <>
           <button className="favourite" onClick={onFavouriteClick}>

@@ -1,3 +1,5 @@
+$black: #202020;
+
 $body-color: #F0F0F0;
 $scroll-track-color: transparent;
 $scroll-thumb-color: #D3D3D3;
@@ -8,7 +10,7 @@ $navbar-active-text-color: var(--bs-red);
 $image-card-border-color: #E3E3E3;
 $image-card-background-color: #FCFCFC;
 
-$dropzone-border-color: #404040;
+$dropzone-border-color: $black;
 $dropzone-background-color: #E3E3E3;
 
 $button-background-color: #FCFCFC;
