@@ -1,0 +1,14 @@
+@import "~/app/style/color.scss";
+
+.button-container {
+  margin-top: 40px;
+
+  button {
+    background-color: $button-background-color;
+    width: 100px;
+
+    &:first-child {
+      margin-right: 15px;
+    }
+  }
+}

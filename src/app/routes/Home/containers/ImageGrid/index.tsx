@@ -9,7 +9,7 @@ import {
   voteDownImageAction
 } from "~/app/redux/actions";
 
-import { ImageCard } from "../../components/ImageCard";
+import { GalleryImageCard } from "../../components/GalleryImageCard";
 
 import "./style.scss";
 
@@ -38,7 +38,7 @@ const ImageGrid: React.FC = () => {
     <div className={"image-grid-container"}>
       {images.map((image) => (
         <div className="image-grid-item-container" key={image.imageId}>
-          <ImageCard
+          <GalleryImageCard
             data={image}
             onFavouriteClick={(): void => { onFavouriteClick(image); }}
             onVoteUpClick={(): void => { onVoteUpClick(image); }}

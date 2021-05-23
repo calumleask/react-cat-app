@@ -1,0 +1,23 @@
+@import "~/app/style/color.scss";
+
+.dropzone-image-card-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.dropzone-container {
+  align-items: center;
+  background-color: $dropzone-background-color;
+  border: 1px dashed $dropzone-border-color;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+
+  p {
+    margin: 0;
+  }
+}

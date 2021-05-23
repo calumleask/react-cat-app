@@ -3,6 +3,7 @@
 .navbar {
   background-color: $navbar-color;
   border-bottom: 1px solid $navbar-border-color;
+  box-shadow: 2px 2px 4px rgba(32, 32, 32, 0.1);
   text-align: center;
 
   .nav-container {
