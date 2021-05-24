@@ -1,4 +1,6 @@
 import React from "react";
+import { Spinner } from "react-bootstrap";
+import classNames from "classnames";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 
@@ -18,20 +20,38 @@ export const GalleryImageCard: React.FC<ImageCardProps> = ({ data, onFavouriteCl
     <ImageCard
       className="gallery-image-card"
       src={data.url}
+      srcWidth={data.width}
+      srcHeight={data.height}
       renderPlaceholder={(): React.ReactElement => (
-        <div className="placeholder"></div>
+        <div className="placeholder">
+          <Spinner animation="grow" variant="secondary" />
+        </div>
       )}
       renderBottom={(): React.ReactElement => (
         <>
-          <button className="favourite" onClick={onFavouriteClick}>
+          <button
+            title={data.favourited ? "unfavourite" : "favourite"}
+            className={classNames("favourite", data.favourited ? "on" : "off")}
+            onClick={onFavouriteClick}
+          >
             {data.favourited ? <FaHeart/> : <FaRegHeart/>}
           </button>
-          <div>
-            <button className="vote-up" onClick={onVoteUpClick}>
+          <div className="vote-buttons-container">
+            <button
+              title="vote up"
+              className="vote-up"
+              disabled={data.vote === 1}
+              onClick={onVoteUpClick}
+            >
               <BiUpArrow/>
             </button>
             {data.score}
-            <button className="vote-up" onClick={onVoteDownClick}>
+            <button
+              title="vote down"
+              className="vote-up"
+              disabled={data.vote === 0}
+              onClick={onVoteDownClick}
+            >
               <BiDownArrow/>
             </button>
           </div>

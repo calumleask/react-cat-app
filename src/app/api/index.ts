@@ -1,4 +1,4 @@
-import AxiosStatic from "axios";
+import AxiosStatic, { AxiosError } from "axios";
 
 const axios = AxiosStatic.create({
   baseURL: "https://api.thecatapi.com/v1"
@@ -6,6 +6,16 @@ const axios = AxiosStatic.create({
 
 const headers = {
   "x-api-key": process.env.THE_CAT_API_KEY
+};
+
+const getErrorMessage = (err: AxiosError): string => {
+  try {
+    const message = err.response.data.message;
+    return message;
+  }
+  catch (e) {
+    return err.message;
+  }
 };
 
 export const uploadImage = async (file: File): Promise<TheCatApi.PostImagesUploadResponseBody> => {
@@ -23,26 +33,24 @@ export const uploadImage = async (file: File): Promise<TheCatApi.PostImagesUploa
       console.log(response);
       resolve(response.data);
     })
-    .catch(err => {
-      reject(err);
+    .catch((err: AxiosError) => {
+      reject(getErrorMessage(err));
     });
   });
 };
 
-const formatGetImagesRequestParams = (options: TheCatApi.GetImagesRequestParams): TheCatApi.GetImagesRequestParams => ({
-  limit: options.limit,
-  page: options.page,
-  order: options.order,
-  sub_id: options.sub_id,
-  breed_ids: options.breed_ids,
-  category_ids: options.category_ids,
-  original_filename: options.original_filename,
-  format: options.format,
-  include_vote: options.include_vote,
-  include_favourite: options.include_favourite
+const formatGetImagesRequestParams = (options: Partial<TheCatApi.GetImagesRequestParams>): TheCatApi.GetImagesRequestParams => ({
+  sub_id: "sub_id" in options ? options.sub_id : "",
+  limit: "limit" in options ? options.limit : 100,
+  page: "page" in options ? options.page : 0,
+  order: "order" in options ? options.order : "DESC",
+  original_filename: "original_filename" in options ? options.original_filename : "",
+  format: "format" in options ? options.format : "json",
+  include_vote: "include_vote" in options ? options.include_vote : 0,
+  include_favourite: "include_favourite" in options ? options.include_favourite : 0
 });
 
-export const getImages = async (options: TheCatApi.GetImagesRequestParams): Promise<TheCatApi.GetImagesResponseData> => {
+export const getImages = async (options: Partial<TheCatApi.GetImagesRequestParams> = {}): Promise<TheCatApi.GetImagesResponseData> => {
   return new Promise((resolve, reject) => {
     axios.get<TheCatApi.GetImagesResponseData>("/images", {
       headers,
@@ -53,19 +61,19 @@ export const getImages = async (options: TheCatApi.GetImagesRequestParams): Prom
       console.log(response);
       resolve(response.data);
     })
-    .catch(err => {
-      reject(err);
+    .catch((err: AxiosError) => {
+      reject(getErrorMessage(err));
     });
   });
 };
 
-const formatGetFavouritesRequestParams = (options: TheCatApi.GetFavouritesRequestParams): TheCatApi.GetFavouritesRequestParams => ({
-  limit: options.limit,
-  page: options.page,
-  sub_id: options.sub_id,
+const formatGetFavouritesRequestParams = (options: Partial<TheCatApi.GetFavouritesRequestParams>): TheCatApi.GetFavouritesRequestParams => ({
+  sub_id: "sub_id" in options ? options.sub_id : "",
+  limit: "limit" in options ? options.limit : 1000,
+  page: "page" in options ? options.page : 0
 });
 
-export const getFavourites = async (options: TheCatApi.GetFavouritesRequestParams): Promise<TheCatApi.GetFavouritesResponseData> => {
+export const getFavourites = async (options: Partial<TheCatApi.GetFavouritesRequestParams> = {}): Promise<TheCatApi.GetFavouritesResponseData> => {
   return new Promise((resolve, reject) => {
     axios.get<TheCatApi.GetFavouritesResponseData>("/favourites", {
       headers,
@@ -76,8 +84,8 @@ export const getFavourites = async (options: TheCatApi.GetFavouritesRequestParam
       console.log(response);
       resolve(response.data);
     })
-    .catch(err => {
-      reject(err);
+    .catch((err: AxiosError) => {
+      reject(getErrorMessage(err));
     });
   });
 };
@@ -96,8 +104,8 @@ export const favouriteImage = async (imageId: string, subId?: string): Promise<T
       console.log(response);
       resolve(response.data);
     })
-    .catch(err => {
-      reject(err);
+    .catch((err: AxiosError) => {
+      reject(getErrorMessage(err));
     });
   });
 };
@@ -112,13 +120,13 @@ export const unfavouriteImage = async (favouriteId: string): Promise<TheCatApi.D
       console.log(response);
       resolve(response.data);
     })
-    .catch(err => {
-      reject(err);
+    .catch((err: AxiosError) => {
+      reject(getErrorMessage(err));
     });
   });
 };
 
-export const vote = async (imageId: string, value: TheCatApi.VoteValue, subId?: string, ): Promise<TheCatApi.PostVotesResponseData> => {
+export const vote = async (imageId: string, value: TheCatApi.VoteValue, subId: string, ): Promise<TheCatApi.PostVotesResponseData> => {
   const body: TheCatApi.PostVotesRequestBody = { image_id: imageId, sub_id: subId, value };
   return new Promise((resolve, reject) => {
     axios.post<TheCatApi.PostVotesResponseData>("/votes", body, {
@@ -132,19 +140,19 @@ export const vote = async (imageId: string, value: TheCatApi.VoteValue, subId?: 
       console.log(response);
       resolve(response.data);
     })
-    .catch(err => {
-      reject(err);
+    .catch((err: AxiosError) => {
+      reject(getErrorMessage(err));
     });
   });
 };
 
-const formatGetVotesRequestParams = (options: TheCatApi.GetVotesRequestParams): TheCatApi.GetVotesRequestParams => ({
-  sub_id: options.sub_id,
-  limit: options.limit,
-  page: options.page
+const formatGetVotesRequestParams = (options: Partial<TheCatApi.GetVotesRequestParams>): TheCatApi.GetVotesRequestParams => ({
+  sub_id: "sub_id" in options ? options.sub_id : "",
+  limit: "limit" in options ? options.limit : 1000,
+  page: "page" in options ? options.page : 0
 });
 
-export const getVotes = async (options: TheCatApi.GetVotesRequestParams): Promise<TheCatApi.GetVotesResponseData> => {
+export const getVotes = async (options: Partial<TheCatApi.GetVotesRequestParams> = {}): Promise<TheCatApi.GetVotesResponseData> => {
   return new Promise((resolve, reject) => {
     axios.get<TheCatApi.GetVotesResponseData>("/votes", {
       headers,
@@ -155,8 +163,8 @@ export const getVotes = async (options: TheCatApi.GetVotesRequestParams): Promis
       console.log(response);
       resolve(response.data);
     })
-    .catch(err => {
-      reject(err);
+    .catch((err: AxiosError) => {
+      reject(getErrorMessage(err));
     });
   });
 };

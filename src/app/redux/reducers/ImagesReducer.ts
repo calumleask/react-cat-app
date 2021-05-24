@@ -8,6 +8,8 @@ import { createActionTypes, createReducer } from "~/common/redux/utils";
 type ImageData = {
   imageId: string;
   url: string;
+  width: number;
+  height: number;
 };
 
 type ImagesReducerState = ImageData[];
@@ -20,7 +22,8 @@ const initialState: ImagesReducerState = [];
 
 const reducerName = "images";
 const actionTypes = createActionTypes(reducerName, [
-  "UPDATE_ALL_IMAGES"
+  "UPDATE_ALL_IMAGES",
+  "ADD_IMAGE"
 ]);
 
 /*
@@ -28,7 +31,8 @@ const actionTypes = createActionTypes(reducerName, [
  */
 
 const reducer = createReducer<ImagesReducerState>(initialState, {
-  [actionTypes.UPDATE_ALL_IMAGES]: (state, { payload }: UpdateAllImagesAction) => ([ ...payload.images ])
+  [actionTypes.UPDATE_ALL_IMAGES]: (_state, { payload }: UpdateAllImagesAction) => ([ ...payload.images ]),
+  [actionTypes.ADD_IMAGE]: (state, { payload }: AddImageAction) => ([ payload.image, ...state ])
 });
 
 reducerRegistry.register(reducerName, reducer);
@@ -41,10 +45,21 @@ type UpdateAllImagesAction = ReduxAction<{
   images: ImageData[];
 }>;
 
-export const buildActionUpdateAllImages = (images: TheCatApi.GetImagesResponseData): UpdateAllImagesAction => ({
+export const buildActionUpdateAllImages = (images: TheCatApi.Image[]): UpdateAllImagesAction => ({
   type: actionTypes.UPDATE_ALL_IMAGES,
   payload: {
-    images: images.map((image) => ({ imageId: image.id, url: image.url }))
+    images: images.map((image) => ({ imageId: image.id, url: image.url, width: image.width, height: image.height }))
+  }
+});
+
+type AddImageAction = ReduxAction<{
+  image: ImageData;
+}>;
+
+export const buildActionAddImage = (image: TheCatApi.Image): AddImageAction => ({
+  type: actionTypes.ADD_IMAGE,
+  payload: {
+    image: { imageId: image.id, url: image.url, width: image.width, height: image.height }
   }
 });
 

@@ -19,6 +19,9 @@ const NavbarComponent: React.FC = () => {
   return (
     <Navbar>
       <div className="nav-container">
+        <Navbar.Brand>
+          ReCAT App
+        </Navbar.Brand>
         <Nav
           activeKey={pathname}
           onSelect={handleNavSelect}

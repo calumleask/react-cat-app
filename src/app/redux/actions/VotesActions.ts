@@ -11,15 +11,14 @@ import { selectUserSubId } from "../selectors";
 
 import * as theCatApi from "~/app/api";
 
-export const fetchVotesAction = (): ReduxThunkAction => (dispatch, getState): void => {
-  const subId = selectUserSubId(getState());
-  theCatApi.getVotes({
-    limit: 10,
-    page: 0,
-    sub_id: subId
-  })
+export const fetchVotesAction = (): ReduxThunkAction => (dispatch): void => {
+  theCatApi.getVotes()
   .then((votes) => {
     dispatch(buildActionUpdateAllVotes(votes));
+  })
+  .catch((errMessage) => {
+    console.log(errMessage);
+    // TODO: show error
   });
 };
 
@@ -41,7 +40,9 @@ const voteImageAsyncApiAction = (imageId: string, value: TheCatApi.VoteValue): R
     const voteId = typeof response.id === "number" ? response.id.toString() : response.id;
     dispatch(buildActionVoteAsyncComplete(imageId, subId, voteId, value));
   })
-  .catch(() => {
+  .catch((errMessage) => {
+    console.log(errMessage);
+    // TODO: show error
     dispatch(buildActionAsyncError(imageId, subId));
   });
 };

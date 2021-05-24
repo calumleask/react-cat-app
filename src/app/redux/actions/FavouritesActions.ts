@@ -13,13 +13,13 @@ import * as theCatApi from "~/app/api";
 
 export const fetchFavouritesAction = (): ReduxThunkAction => (dispatch, getState): void => {
   const subId = selectUserSubId(getState());
-  theCatApi.getFavourites({
-    limit: 10,
-    page: 0,
-    sub_id: subId
-  })
+  theCatApi.getFavourites({ sub_id: subId })
   .then((favourites) => {
     dispatch(buildActionUpdateAllFavourites(favourites));
+  })
+  .catch((errMessage) => {
+    console.log(errMessage);
+    // TODO: show error
   });
 };
 
@@ -36,7 +36,9 @@ export const favouriteImageAsyncApiAction = (imageId: string): ReduxThunkAction 
     const favouriteId = typeof response.id === "number" ? response.id.toString() : response.id;
     dispatch(buildActionFavouriteAsyncComplete(imageId, true, favouriteId));
   })
-  .catch(() => {
+  .catch((errMessage) => {
+    console.log(errMessage);
+    // TODO: show error
     dispatch(buildActionAsyncError(imageId));
   });
 };
@@ -48,7 +50,9 @@ export const unfavouriteImageAsyncApiAction = (imageId: string, favouriteId: str
     console.log(response.message);
     dispatch(buildActionFavouriteAsyncComplete(imageId, false));
   })
-  .catch(() => {
+  .catch((errMessage) => {
+    console.log(errMessage);
+    // TODO: show error
     dispatch(buildActionAsyncError(imageId));
   });
 };

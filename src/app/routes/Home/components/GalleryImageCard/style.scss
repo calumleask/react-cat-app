@@ -3,17 +3,50 @@
 .gallery-image-card {
 
   .placeholder {
+    align-items: center;
     background-color: $black;
+    display: flex;
+    justify-content: center;
     width: 100%;
     height: 100%;
   }
 
   .bottom-container {
     justify-content: space-between;
+    padding: 0 1em;
 
     button {
       background-color: transparent;
       border: none;
+    }
+
+    button.favourite {
+      transition: transform 0.25s;
+
+      &.off {
+        &:hover, &:active {
+          transform: scale(1.1);
+        }
+      }
+
+      &.on {
+        color: var(--bs-red);
+        transform: scale(1.1);
+      }
+    }
+
+    .vote-buttons-container {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      button:not(:disabled) {
+        transition: transform 0.1s;
+        &:hover, &:active {
+          transform: scale(1.1);
+        }
+      }
     }
   }
 }

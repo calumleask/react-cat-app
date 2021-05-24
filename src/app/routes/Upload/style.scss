@@ -1,14 +1,24 @@
 @import "~/app/style/color.scss";
 
+.alert {
+  margin: 2rem 0;
+  width: 100%;
+  max-width: 400px;
+
+  .spinner-border {
+    margin-right: 1em;
+  }
+}
+
 .button-container {
-  margin-top: 40px;
+  margin-top: 2rem;
 
   button {
     background-color: $button-background-color;
-    width: 100px;
+    width: 8rem;
 
     &:first-child {
-      margin-right: 15px;
+      margin-right: 1rem;
     }
   }
 }

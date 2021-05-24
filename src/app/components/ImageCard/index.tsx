@@ -6,11 +6,13 @@ import "./style.scss";
 type ImageCardProps = {
   className?: string;
   src: string;
+  srcWidth?: number;
+  srcHeight?: number;
   renderPlaceholder?: () => React.ReactElement;
   renderBottom?: () => React.ReactElement;
 };
 
-export const ImageCard: React.FC<ImageCardProps> = ({ className, src, renderPlaceholder, renderBottom }) => {
+export const ImageCard: React.FC<ImageCardProps> = ({ className, src, srcWidth = 1, srcHeight = 1, renderPlaceholder, renderBottom }) => {
   const imgRef = useRef<HTMLImageElement>();
   const [imgLoaded, setImgLoaded] = useState(false);
 
@@ -32,7 +34,10 @@ export const ImageCard: React.FC<ImageCardProps> = ({ className, src, renderPlac
       {
         !imgLoaded && renderPlaceholder
         ? (
-          <div className="placeholder-relative-container-square">
+          <div
+            className="placeholder-relative-container-square"
+            style={{ paddingTop: (srcHeight / srcWidth) * 100 + "%" }}
+          >
             <div className="placeholder-absolute-container">
               {renderPlaceholder()}
             </div>

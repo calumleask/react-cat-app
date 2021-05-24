@@ -1,6 +1,10 @@
 @import "./color.scss";
 @import "./breakpoints.scss";
 
+html {
+  font-size: 100%;
+}
+
 body {
   background-color: $body-color;
 }

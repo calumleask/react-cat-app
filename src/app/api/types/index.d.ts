@@ -1,19 +1,21 @@
 
 declare namespace TheCatApi {
 
-  /**
-   * POST /images/upload 
-   * */
-
-  type PostImagesUploadResponseBody = {
+  type Image = {
     id: string;
     url: string;
     sub_id: string;
     created_at: string;
     original_filename: string;
-    categories: any; // TODO
-    breeds: any; // TODO
+    width: number;
+    height: number;
   };
+
+  /**
+   * POST /images/upload 
+   * */
+
+  type PostImagesUploadResponseBody = Image;
 
   /**
    * GET /images 
@@ -24,23 +26,13 @@ declare namespace TheCatApi {
     page: number;
     order: "DESC" | "ASC" | "RANDOM";
     sub_id: string;
-    breed_ids: string[]; // TODO unique
-    category_ids: string[]; // TODO unique
     original_filename: string;
     format: "json" | "src";
-    include_vote: number;
-    include_favourite: number;
+    include_vote: 0 | 1;
+    include_favourite: 0 | 1;
   };
 
-  type GetImagesResponseData = {
-    id: string;
-    url: string;
-    sub_id: string;
-    created_at: string;
-    original_filename: string;
-    categories: any; // TODO
-    breeds: any; // TODO
-  }[];
+  type GetImagesResponseData = Image[];
 
   /**
    * GET /favourites 
@@ -130,7 +122,10 @@ declare namespace App {
     imageId: string;
     url: string;
     favourited: boolean;
+    vote?: TheCatApi.VoteValue;
     score: number;
+    width: number;
+    height: number;
   };
 
 }
