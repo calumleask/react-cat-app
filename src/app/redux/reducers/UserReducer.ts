@@ -1,16 +1,29 @@
 import reducerRegistry from "~/common/redux/reducers/ReducerRegistry";
 import { createReducer } from "~/common/redux/utils";
+import queryStringParser from "~/common/utils/queryStringParser";
+
+
 
 /*
  *  Initial State
  */
 
+export const tryGetSubIdFromQueryString = (): string => {
+  let numberId = queryStringParser.get("userId");
+  console.log(numberId);
+  if (/^[0-9]+$/.test(numberId) === false) {
+    const defaultNumberId = "29478693";
+    numberId = defaultNumberId;
+  }
+  return `User-${numberId}`;
+};
+
 type UserReducerState = {
-    subId: string;
+  subId: string;
 };
 
 const initialState: UserReducerState = {
-    subId: "User-29478693"
+  subId: tryGetSubIdFromQueryString()
 };
 
 /*
