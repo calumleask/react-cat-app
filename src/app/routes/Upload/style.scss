@@ -1,24 +1,25 @@
 @import "~/app/style/color.scss";
 
 .alert {
-  margin: 2rem 0;
+  margin: 3rem 0;
   width: 100%;
-  max-width: 400px;
+  max-width: 40rem;
 
   .spinner-border {
-    margin-right: 1em;
+    margin-right: 1rem;
   }
 }
 
 .button-container {
-  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  margin-top: 3rem;
+  width: 100%;
+  max-width: 40rem;
 
   button {
     background-color: $button-background-color;
-    width: 8rem;
-
-    &:first-child {
-      margin-right: 1rem;
-    }
+    flex-grow: 1;
+    margin: 0 1rem;
   }
 }

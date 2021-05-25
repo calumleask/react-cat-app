@@ -15,11 +15,11 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 0;
+  padding: 1rem;
 }
 
 @media (min-width: $breakpoint-desktop) {
   .content-container {
-    padding: 60px 0;
+    padding: 6rem 0;
   }
 }

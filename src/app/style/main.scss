@@ -1,10 +1,6 @@
 @import "./color.scss";
 @import "./breakpoints.scss";
 
-html {
-  font-size: 100%;
-}
-
 body {
   background-color: $body-color;
 }
@@ -50,5 +46,15 @@ html {
 @media (min-width: $breakpoint-desktop-large) {
   .nav-container, .content-container {
     width: 60%;
+  }
+}
+
+html {
+  font-size: 16px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  html {
+    font-size: 32px;
   }
 }

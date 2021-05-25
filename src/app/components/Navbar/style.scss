@@ -2,15 +2,14 @@
 
 .navbar {
   background-color: $navbar-color;
-  border-bottom: 1px solid $navbar-border-color;
-  box-shadow: 2px 2px 4px rgba(32, 32, 32, 0.1);
-  padding-left: 5px;
+  border-bottom: 0.1rem solid $navbar-border-color;
+  box-shadow: 0.2rem 0.2rem 0.4rem rgba(32, 32, 32, 0.1);
   text-align: center;
 
   .nav-container {
     display: flex;
     flex-direction: row;
-    padding-left: 5px;
+    padding-left: 1rem;
     margin: 0 auto;
   
     .nav-link.active {

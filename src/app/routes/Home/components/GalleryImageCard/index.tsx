@@ -30,7 +30,7 @@ export const GalleryImageCard: React.FC<ImageCardProps> = ({ data, onFavouriteCl
       renderBottom={(): React.ReactElement => (
         <>
           <button
-            title={data.favourited ? "unfavourite" : "favourite"}
+            title={"favourite"}
             className={classNames("favourite", data.favourited ? "on" : "off")}
             onClick={onFavouriteClick}
           >

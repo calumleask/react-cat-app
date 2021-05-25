@@ -1,7 +1,7 @@
 @import "~/app/style/breakpoints.scss";
 
-$min-width: 280px;
-$grid-spacing: 5px;
+$min-width: 26rem;
+$grid-spacing: 1rem;
 
 .image-grid-container {
   align-items: center;
@@ -10,6 +10,7 @@ $grid-spacing: 5px;
   grid-row-gap: $grid-spacing;
   grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
   width: 100%;
+  overflow-x: hidden;
 
   .image-grid-item-container {
     min-width: $min-width;

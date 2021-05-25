@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { isMobile } from "react-device-detect";
 
 import { ImageCard } from "~/app/components/ImageCard";
 
@@ -54,7 +55,8 @@ export const DropzoneImageCard: React.FC<DropzoneImageCardProps> = ({ image, onS
           <div className={"dropzone-container"} {...getRootProps()}>
             <input {...getInputProps()} />
             {
-              <p>Drop your <b>cat image</b> here or click to select from your computer</p>
+              
+              <p>Drop your <b>cat image</b> here or {isMobile ? "tap to select from your device" : "click to select from your computer"}</p>
             }
           </div>
         )}
