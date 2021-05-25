@@ -29,8 +29,8 @@ export const uploadImage = async (file: File): Promise<TheCatApi.PostImagesUploa
       }
     })
     .then((response) => {
-      console.log("POST /images/upload");
-      console.log(response);
+      // console.log("POST /images/upload");
+      // console.log(response);
       resolve(response.data);
     })
     .catch((err: AxiosError) => {
@@ -57,8 +57,8 @@ export const getImages = async (options: Partial<TheCatApi.GetImagesRequestParam
       params: formatGetImagesRequestParams(options)
     })
     .then((response) => {
-      console.log("GET /images");
-      console.log(response);
+      // console.log("GET /images");
+      // console.log(response);
       resolve(response.data);
     })
     .catch((err: AxiosError) => {
@@ -80,8 +80,8 @@ export const getFavourites = async (options: Partial<TheCatApi.GetFavouritesRequ
       params: formatGetFavouritesRequestParams(options)
     })
     .then((response) => {
-      console.log("GET /favourites");
-      console.log(response);
+      // console.log("GET /favourites");
+      // console.log(response);
       resolve(response.data);
     })
     .catch((err: AxiosError) => {
@@ -100,8 +100,8 @@ export const favouriteImage = async (imageId: string, subId?: string): Promise<T
       }
     })
     .then((response) => {
-      console.log("POST /favourites");
-      console.log(response);
+      // console.log("POST /favourites");
+      // console.log(response);
       resolve(response.data);
     })
     .catch((err: AxiosError) => {
@@ -116,8 +116,8 @@ export const unfavouriteImage = async (favouriteId: string): Promise<TheCatApi.D
       headers
     })
     .then((response) => {
-      console.log("DELETE /favourites");
-      console.log(response);
+      // console.log("DELETE /favourites");
+      // console.log(response);
       resolve(response.data);
     })
     .catch((err: AxiosError) => {
@@ -136,8 +136,8 @@ export const vote = async (imageId: string, value: TheCatApi.VoteValue, subId: s
       }
     })
     .then((response) => {
-      console.log("POST /votes");
-      console.log(response);
+      // console.log("POST /votes");
+      // console.log(response);
       resolve(response.data);
     })
     .catch((err: AxiosError) => {
@@ -159,8 +159,8 @@ export const getVotes = async (options: Partial<TheCatApi.GetVotesRequestParams>
       params: formatGetVotesRequestParams(options)
     })
     .then((response) => {
-      console.log("GET /votes");
-      console.log(response);
+      // console.log("GET /votes");
+      // console.log(response);
       resolve(response.data);
     })
     .catch((err: AxiosError) => {

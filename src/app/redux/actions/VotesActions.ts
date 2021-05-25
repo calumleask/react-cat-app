@@ -16,8 +16,8 @@ export const fetchVotesAction = (): ReduxThunkAction => (dispatch): void => {
   .then((votes) => {
     dispatch(buildActionUpdateAllVotes(votes));
   })
-  .catch((errMessage) => {
-    console.log(errMessage);
+  .catch((_errMessage) => {
+    // console.log(_errMessage);
     // TODO: show error
   });
 };
@@ -40,8 +40,8 @@ const voteImageAsyncApiAction = (imageId: string, value: TheCatApi.VoteValue): R
     const voteId = typeof response.id === "number" ? response.id.toString() : response.id;
     dispatch(buildActionVoteAsyncComplete(imageId, subId, voteId, value));
   })
-  .catch((errMessage) => {
-    console.log(errMessage);
+  .catch((_errMessage) => {
+    // console.log(_errMessage);
     // TODO: show error
     dispatch(buildActionAsyncError(imageId, subId));
   });

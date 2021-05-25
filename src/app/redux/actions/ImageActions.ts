@@ -9,8 +9,8 @@ export const fetchImagesAction = (): ReduxThunkAction => (dispatch, _getState): 
   .then((images) => {
     dispatch(buildActionUpdateAllImages(images));
   })
-  .catch((errMessage) => {
-    console.log(errMessage);
+  .catch((_errMessage) => {
+    // console.log(_errMessage);
     // TODO: show error
   });
 };

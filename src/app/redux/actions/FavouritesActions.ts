@@ -17,8 +17,8 @@ export const fetchFavouritesAction = (): ReduxThunkAction => (dispatch, getState
   .then((favourites) => {
     dispatch(buildActionUpdateAllFavourites(favourites));
   })
-  .catch((errMessage) => {
-    console.log(errMessage);
+  .catch((_errMessage) => {
+    // console.log(_errMessage);
     // TODO: show error
   });
 };
@@ -36,8 +36,8 @@ export const favouriteImageAsyncApiAction = (imageId: string): ReduxThunkAction 
     const favouriteId = typeof response.id === "number" ? response.id.toString() : response.id;
     dispatch(buildActionFavouriteAsyncComplete(imageId, true, favouriteId));
   })
-  .catch((errMessage) => {
-    console.log(errMessage);
+  .catch((_errMessage) => {
+    // console.log(_errMessage);
     // TODO: show error
     dispatch(buildActionAsyncError(imageId));
   });
@@ -50,8 +50,8 @@ export const unfavouriteImageAsyncApiAction = (imageId: string, favouriteId: str
     console.log(response.message);
     dispatch(buildActionFavouriteAsyncComplete(imageId, false));
   })
-  .catch((errMessage) => {
-    console.log(errMessage);
+  .catch((_errMessage) => {
+    // console.log(_errMessage);
     // TODO: show error
     dispatch(buildActionAsyncError(imageId));
   });

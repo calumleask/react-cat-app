@@ -10,7 +10,6 @@ import queryStringParser from "~/common/utils/queryStringParser";
 
 export const tryGetSubIdFromQueryString = (): string => {
   let numberId = queryStringParser.get("userId");
-  console.log(numberId);
   if (/^[0-9]+$/.test(numberId) === false) {
     const defaultNumberId = "29478693";
     numberId = defaultNumberId;
